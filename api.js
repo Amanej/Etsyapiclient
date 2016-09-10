@@ -1,9 +1,11 @@
+var settings = require('settings.json');
 var etsyjs = require('etsy-js');
-var client = etsyjs.client({
-  key: '7w9x3xs3iz0ay80ul8ur1vjv',
-  secret: 'ig3zc81yh6',
+/*var client = etsyjs.client({
+  key: settings.key,
+  secret: settings,
   callbackURL: 'http://localhost:3000/authorise'
-});
+});*/
+var client = etsyjs.client(settings.key);
 
 client.get('/shops',{}, function(err,status,body,headers) {
   console.log(body);
