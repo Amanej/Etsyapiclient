@@ -58,6 +58,11 @@ app.get('/find', function(req, res) {
   });
 });
 
+app.get("/digible", function(req,res) {
+  var etsyShop = client.shop('digible');
+  return etsyShop;
+});
+
 server = app.listen(3010, function() {
   return console.log('Listening on port %d', server.address().port);
 });
