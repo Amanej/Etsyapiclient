@@ -10,9 +10,13 @@ url = require('url');
 
 etsyjs = require('etsy-js');
 
+settings = require('./settings.json');
+
+console.log(settings.key);
+
 client = etsyjs.client({
-  key: '7w9x3xs3iz0ay80ul8ur1vjv',
-  secret: 'ig3zc81yh6',
+  key: settings.key,
+  secret: settings.secret,
   callbackURL: 'http://localhost:3010/authorise'
 });
 
