@@ -40,6 +40,8 @@ app.get('/', function(req, res) {
 app.get('/authorise', function(req, res) {
   var query, verifier;
   query = url.parse(req.url, true).query;
+  console.log("Authorise url: "+url);
+  console.log("Authorise query: "+query);
   verifier = query.oauth_verifier;
   return client.accessToken(req.session.token, req.session.sec, verifier, function(err, response) {
     req.session.token = response.token;
@@ -98,6 +100,36 @@ app.get("/createListing", function(req,res) {
 
 });
 
+app.get("/create_shipping_template",function(req,res) {
+  var newShippingTemplate, oauthSession;
+  oauthSession = {
+    token: req.session.token,
+    secret: req.session.sec
+  };
+  console.log("Creating Shipping Template");
+
+});
+
+app.get("/find_shipping_templates", function(req,res) {
+  var shippingTemplates, oauthSession;
+  oauthSession = {
+    token: req.session.token,
+    secret: req.session.sec
+  };
+  console.log("Finding shipping templates!");
+  return client.auth(req.session.token, req.session.sec).shipping("etsyjs").findAllShippingTemplates(function(err, body, headers) {
+    if (err) {
+      console.log(err);
+    }
+    if (body) {
+      console.dir(body);
+    }
+    if (body) {
+      return res.send(body.results[0]);
+    }
+  });
+});
+
 app.get('/createAddress', function(req, res) {
   var newAddress, oauthSession;
   oauthSession = {
@@ -125,6 +157,10 @@ app.get('/createAddress', function(req, res) {
       return res.send(body.results[0]);
     }
   });
+});
+
+app.get("/accessListings", function(req,res) {
+  return client.addScope("listings_r");
 });
 
 server = app.listen(3010, function() {
